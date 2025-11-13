@@ -118,6 +118,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -220,9 +221,6 @@ fun ViewerRoute(
         onOpenSettings = onOpenSettings,
         healthState = healthState,
         isNetworkValidated = isNetworkValidated,
-        deletionConfirmationUiState = DeletionConfirmationUiState(),
-        onConfirmDeletion = {},
-        deletionConfirmationEvents = emptyFlow(),
         deletionConfirmationUiState = deletionConfirmationUiState,
         onConfirmDeletion = deletionConfirmationViewModel::confirmPending,
         deletionConfirmationEvents = deletionConfirmationEvents,
@@ -464,6 +462,7 @@ internal fun ViewerScreen(
                 }
             }
         }
+    }
     LaunchedEffect(deletionConfirmationEvents, context) {
         deletionConfirmationEvents.collectLatest { event ->
             when (event) {
@@ -484,8 +483,6 @@ internal fun ViewerScreen(
         }
     }
 
-    }
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -499,9 +496,6 @@ internal fun ViewerScreen(
                 onScrollToNewest = onScrollToNewest,
                 healthState = healthState,
                 isNetworkValidated = isNetworkValidated,
-                deletionConfirmationUiState = DeletionConfirmationUiState(),
-                onConfirmDeletion = {},
-                deletionConfirmationEvents = emptyFlow(),
                 deletionConfirmationUiState = deletionConfirmationUiState,
                 onConfirmDeletion = onConfirmDeletion,
             )
@@ -744,9 +738,6 @@ private fun ViewerTopBar(
                 HealthStatusBadge(
                     healthState = healthState,
                     isNetworkValidated = isNetworkValidated,
-                    deletionConfirmationUiState = DeletionConfirmationUiState(),
-                    onConfirmDeletion = {},
-                    deletionConfirmationEvents = emptyFlow(),
                 )
             }
         },
